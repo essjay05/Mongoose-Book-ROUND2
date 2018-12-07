@@ -5,6 +5,7 @@ const
     app = express(),
     path = require('path'),
     logger = require('morgan'),
+    Book = require('./models/book'),
     PORT = process.env.PORT || 3000;
 
 // Database
@@ -18,8 +19,11 @@ app.use(express.static(path.join(__dirname, 'public', 'views')));
 app.use(logger('dev'));
 
 // Routes
-app.get('/', (req, res) => {
-    res.sendFile('index.html')
+app.get('/api/books', (req, res) => {
+    Book.find({}, (req, res) => {
+        if (err) res.json({ succes: false, err});
+        res.json({ success: true, books });
+    });
 });
 
 /**
