@@ -5,7 +5,6 @@ const
     app = express(),
     path = require('path'),
     logger = require('morgan'),
-    Book = require('./models/book'),
     PORT = process.env.PORT || 3000;
 
 // Database
@@ -17,14 +16,12 @@ require('./db');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public', 'views')));
 app.use(logger('dev'));
+app.use(express.json());
 
 // Routes
-app.get('/api/books', (req, res) => {
-    Book.find({}, (req, res) => {
-        if (err) res.json({ succes: false, err});
-        res.json({ success: true, books });
-    });
-});
+const bookRouter = require('./routers/bookRouter');
+app.use('/api/books', bookRouter);
+
 
 /**
 |--------------------------------------------------
