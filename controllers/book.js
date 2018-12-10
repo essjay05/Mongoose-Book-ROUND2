@@ -9,7 +9,9 @@ const Book = require('../models/book')
 
 module.exports = {
     index: (req, res) => {
-        Book.find({}, (err, books) => {
+        Book.find()
+            .populate('author')
+            .exec((err, books) => {
             if (err) res.json({ success: false, err});
             res.json({ success: true, books });
         })

@@ -20,7 +20,9 @@ app.use(express.json());
 
 // Routes
 const bookRouter = require('./routers/bookRouter');
+const authorRouter = require('./routers/authorRouter');
 app.use('/api/books', bookRouter);
+app.use('/api/authors', authorRouter);
 
 
 /**
